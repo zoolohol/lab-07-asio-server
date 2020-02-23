@@ -54,8 +54,17 @@ target_include_directories(tests
 target_include_directories(localTest
         PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include
 )
+target_link_libraries(template
+        ${CMAKE_THREAD_LIBS_INIT}
+        Boost::log_setup
+        Boost::log
+        Boost::thread
+        Boost::filesystem
+        Boost::system
+        )
 # TODO: change template word to project name and delete this comment
-target_link_libraries(tests GTest::main template)
+target_link_libraries(tests
+        GTest::main)
 target_link_libraries(localTest
   ${CMAKE_THREAD_LIBS_INIT}
   Boost::log_setup

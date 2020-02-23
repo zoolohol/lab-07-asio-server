@@ -37,8 +37,6 @@ int main(){
     tcp::acceptor acceptor(ioContext, tcp::endpoint(tcp::v4(), PORT));
     std::deque<std::shared_ptr<Client>> clients;
     std::thread connectionHandler([&acceptor, &ioContext, &mutex, &clients](){
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wmissing-noreturn"
         while (true) {
             auto client = std::make_shared<Client>(ioContext);
             acceptor.accept(client -> socket);
@@ -46,11 +44,8 @@ int main(){
             clients.push_back(client);
             std::this_thread::sleep_for(1ms);
         }
-#pragma clang diagnostic pop
     });
     std::thread clientHandler([&mutex, &clients, &lg](){
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wmissing-noreturn"
         while (true) {
             std::this_thread::sleep_for(1ms);
             std::scoped_lock lock(mutex);
@@ -112,14 +107,10 @@ int main(){
                 }
             }
         }
-#pragma clang diagnostic pop
     });
     connectionHandler.detach();
     clientHandler.detach();
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wmissing-noreturn"
     while (true) {
         std::this_thread::sleep_for(1ms);
     }
-#pragma clang diagnostic pop
 }

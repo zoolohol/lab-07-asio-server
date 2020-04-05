@@ -4,6 +4,7 @@ language:
 - minimal
 services:
 - docker
+
 jobs:
   include:
   - name: "checks"
@@ -15,10 +16,9 @@ jobs:
   - name: "quality"
     script:
     - ./scripts/genenv.sh
-    - docker run --env-file .env -v `pwd`:`pwd` -w `pwd` -t rusdevops/bootstrap-cpp scripts/coverage.sh
+    #- docker run --env-file .env -v `pwd`:`pwd` -w `pwd` -t rusdevops/bootstrap-cpp scripts/coverage.sh
     # The bot has gone...
     # - docker run --env-file .env -v `pwd`:`pwd` -w `pwd` -t rusdevops/bootstrap-cpp scripts/duplication.sh
-
 
 notifications:
     email: false
